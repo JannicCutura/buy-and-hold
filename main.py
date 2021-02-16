@@ -72,21 +72,22 @@ df["buy-and-hold"].plot.line(label="buy and hold", linewidth=2, color=(24/255,93
 
 ax.set_xlabel('Date')
 ax.set_ylabel('Total Return (12th March 2020 = 100)')
-ax.set_title(r'Return for buy-and-hold strategy vs panic-sale', fontsize=14, fontname="Times New Roman Bold")
+ax.set_title(r'Return for buy-and-hold strategy vs panic-sale', fontsize=24,
+             fontname='Times New Roman', fontweight = 250)
 ax.set_ylim((90,150))
 ax.set_xlim((datetime.date(2020,1,1),datetime.date(2020,7,7)))
 
 ax.annotate('fairr portfolio \nsold entirely \non March 12th',
             ha="center", va="center",
             xy=("2020-03-12", 100),
-            xytext=("2020-01-25", 125),
+            xytext=("2020-02-04", 116),
             arrowprops=dict(facecolor='black', arrowstyle="->", connectionstyle="arc3"),
             bbox=bbox_props)
 
 ax.annotate('Market reaches \nlowest point \non 18th March',
             ha="center", va="center",
             xy=("2020-03-23", df["buy-and-hold"].min()),
-            xytext=("2020-01-25", 105),
+            xytext=("2020-02-11", 97),
             arrowprops=dict(facecolor='black', arrowstyle="->", connectionstyle="arc3"),
             bbox=bbox_props)
 
