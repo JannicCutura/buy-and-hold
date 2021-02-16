@@ -76,7 +76,7 @@ ax.set_title(r'Return for buy-and-hold strategy vs panic-sale', fontsize=14, fon
 ax.set_ylim((90,150))
 ax.set_xlim((datetime.date(2020,1,1),datetime.date(2020,7,7)))
 
-ax.annotate('fairr portfolio \nsold on March 12th',
+ax.annotate('fairr portfolio \nsold entirely \non March 12th',
             ha="center", va="center",
             xy=("2020-03-12", 100),
             xytext=("2020-01-25", 125),
