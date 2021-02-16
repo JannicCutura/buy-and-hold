@@ -3,15 +3,16 @@
 
 
 
-![](https://github.com/JannicCutura/fundmappeR/blob/main/docs/fundmapper.png) 
+![](https://github.com/JannicCutura/buy-and-hold/blob/main/docs/buy_and_hold.png) 
 
 
 ## Requirements
 
 Use `pip install` to install the following dependencies:
-- `xlrd`
 - `pandas`
 - `matplotlib`
+- `numpy`
+- `datetime`
 
 
 ## Authors
