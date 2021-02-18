@@ -2,7 +2,7 @@ import pandas as pd, numpy as np
 import datetime
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-
+from matplotlib.dates import MonthLocator
 
 
 funds = pd.DataFrame(data={"WKN":["A1C9DP","A0YAN6",  "A1C9CZ", "A1JJAF","A1C9C2", "LYX0LQ","A111X9", "LYX0YD"],
@@ -78,38 +78,43 @@ df = df.set_index("date")
 
 df = df.merge(fund_returns_wide, left_index=True, right_index=True)
 
-etfcolor = (24/255,93/255,169/255)
+
+
+
+
+
 
 ## plot
 fig, ax = plt.subplots(1,figsize=(8,6))
 bbox_props = dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9)
-df["buy-and-hold"].plot.line(label="weighted return of ETFs in the fairr portfolio", alpha = 1,linewidth=2, color=(24/255,93/255,169/255))
-df['IE00B0HCGS80'].plot.line(label="individual returns of ETFs in the fairr portfolio", alpha = 0.25,linewidth=2, color=etfcolor)
+etfcolor = (24/255,93/255,169/255)
+df["buy-and-hold"].plot.line(label="weighted return of ETFs \nin the fairr portfolio", alpha = 1,linewidth=2, color=(24/255,93/255,169/255))
+df['IE00B0HCGS80'].plot.line(label="individual returns of ETFs \nin the fairr portfolio", alpha = 0.25,linewidth=2, color=etfcolor)
 for etfs in ['IE00B0HCGS80', 'IE00B1W6CW87', 'IE00B2PC0609', 'IE00B67WB637',
        'IE00BKM4GZ66', 'IE0030982288', 'LU0317841665', 'LU1781541179']:
     df[etfs].plot.line( label='_Hidden', alpha = 0.25,linewidth=2, color=etfcolor)
 
 df["panic-sale"].plot.line(label="fairr portfolio",  linewidth=2, color=(182/255,12/255,75/255))
 
-
 ax.set_xlabel('Date')
 ax.set_ylabel('Total Return (12th March 2020 = 100)')
-ax.set_title(r'Return for buy-and-hold strategy vs panic-sale', fontsize=24,
-             fontname='Times New Roman', fontweight = 250)
-ax.set_ylim((90,150))
-ax.set_xlim((datetime.date(2020,1,1),datetime.date(2020,7,7)))
 
-ax.annotate('fairr portfolio \nsold entirely \non March 12th',
+ax.set_ylim((85,165))
+ax.set_xlim((datetime.date(2020,1,1),datetime.date(2020,7,7)))
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+
+ax.annotate('fairr and Sutorbank \nsold the portfolio \nentirely on March 12th',
             ha="center", va="center",
             xy=("2020-03-12", 100),
             xytext=("2020-02-04", 116),
             arrowprops=dict(facecolor='black', arrowstyle="->", connectionstyle="arc3"),
             bbox=bbox_props)
 
-ax.annotate('Market reaches \nlowest point \non 18th March',
+ax.annotate('The weighted returns of \nETFs in the fair portfolio\n reach their lowest point \non 18th March, six days \nafter  the panic sale',
             ha="center", va="center",
             xy=("2020-03-23", df["buy-and-hold"].min()),
-            xytext=("2020-02-11", 97),
+            xytext=("2020-02-01", 97),
             arrowprops=dict(facecolor='black', arrowstyle="->", connectionstyle="arc3"),
             bbox=bbox_props)
 
@@ -117,15 +122,21 @@ ax.annotate("", xy=("2020-06-12", 119.3),
             xytext=("2020-06-12", 100),
             arrowprops=dict(arrowstyle="<->", connectionstyle="arc3"))
 
-ax.text("2020-06-12", 110, "Fairr reinvests \nJune 12th after \nthe market regains \n20% points",
+ax.text("2020-06-12", 110, "Fairr reinvests June \n12th after the market \nregained 20% points",
         ha="center", va="center", rotation=0, bbox=bbox_props)
 
 plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=30))
-plt.gcf().autofmt_xdate()
-fig.tight_layout()
-
+ax.xaxis.set_major_locator(MonthLocator())
+#plt.gcf().autofmt_xdate()
+#fig.tight_layout()
 plt.legend(loc="upper right", title="Strategy", frameon=True)
+
+plt.suptitle("Fairr riester portfolio: Buy-and-hold vs panic-sale ", fontsize=16)
+ax.set_title('The fairr Riester portfolio consisted of eight ETFs (light blue lines). The dark blue line and the dark '
+             '\nred line visualize the returns of fairr portfolio for a buy-and-hold and panic-sale stragey respectively', fontsize = 8)
+
+
 plt.show()
+plt.xticks(rotation = 0)
 fig.savefig("C:\\Users\\janni\\Dropbox\\university\\13 Semester bis zum Lebensende\\2021_02 buy-and-hold\\codes\\docs\\buy_and_hold.png")
 
