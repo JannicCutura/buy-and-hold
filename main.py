@@ -129,11 +129,13 @@ plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
 ax.xaxis.set_major_locator(MonthLocator())
 #plt.gcf().autofmt_xdate()
 #fig.tight_layout()
+fig.subplots_adjust(top=0.86)
 plt.legend(loc="upper right", title="Strategy", frameon=True)
 
 plt.suptitle("Fairr riester portfolio: Buy-and-hold vs panic-sale ", fontsize=16)
-ax.set_title('The fairr Riester portfolio consisted of eight ETFs (light blue lines). The dark blue line and the dark '
-             '\nred line visualize the returns of fairr portfolio for a buy-and-hold and panic-sale stragey respectively', fontsize = 8)
+ax.set_title('The fairr Riester portfolio consisted of eight ETFs (light blue lines). On March 12th, fair and Sutor bank'
+             '\nsold the entire portfolio. The dark blue line represents the weighted returns of the fairr portfolio ETFS'
+             '\nfor a buy-and-hold strategy. The dark red line visualize the returns for the actual panic-sale return', fontsize = 8)
 
 
 plt.show()
