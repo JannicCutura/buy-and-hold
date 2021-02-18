@@ -30,6 +30,23 @@ fund_returns = (fund_returns.drop(columns="Unnamed: 0")
                             .query("date != 'CURRENCY'"))
 
 
+
+fund_returns_wide = fund_returns  # store a copy of the wide layout
+fund_returns_wide = fund_returns_wide.convert_dtypes()
+fund_returns_wide["date"] = fund_returns_wide["date"].dt.date
+
+ref_period = fund_returns_wide.query("date ==@datetime.date(2020,3,12)")
+
+for column in ['IE00B0HCGS80', 'IE00B1W6CW87', 'IE00B2PC0609', 'IE00B67WB637',
+       'IE00BKM4GZ66', 'IE0030982288', 'LU0317841665', 'LU1781541179']:
+    fund_returns_wide[column] = fund_returns_wide[column]/ref_period[column].iloc[0]*100
+
+fund_returns_wide = fund_returns_wide.filter(['date','IE00B0HCGS80', 'IE00B1W6CW87', 'IE00B2PC0609', 'IE00B67WB637',
+       'IE00BKM4GZ66', 'IE0030982288', 'LU0317841665', 'LU1781541179'])
+
+fund_returns_wide = fund_returns_wide.set_index("date")
+
+
 fund_returns = (fund_returns.set_index("date")
                             .unstack()
                             .reset_index()
@@ -59,16 +76,21 @@ df = df.query("@datetime.date(2020,7,9)>date >@datetime.date(2019,9,30)")
 df = df.set_index("date")
 
 
+df = df.merge(fund_returns_wide, left_index=True, right_index=True)
 
-
-
+etfcolor = (24/255,93/255,169/255)
 
 ## plot
 fig, ax = plt.subplots(1,figsize=(8,6))
 bbox_props = dict(boxstyle="round", fc="w", ec="0.5", alpha=0.9)
+df["buy-and-hold"].plot.line(label="weighted return of ETFs in the fairr portfolio", alpha = 1,linewidth=2, color=(24/255,93/255,169/255))
+df['IE00B0HCGS80'].plot.line(label="individual returns of ETFs in the fairr portfolio", alpha = 0.25,linewidth=2, color=etfcolor)
+for etfs in ['IE00B0HCGS80', 'IE00B1W6CW87', 'IE00B2PC0609', 'IE00B67WB637',
+       'IE00BKM4GZ66', 'IE0030982288', 'LU0317841665', 'LU1781541179']:
+    df[etfs].plot.line( label='_Hidden', alpha = 0.25,linewidth=2, color=etfcolor)
 
-df["panic-sale"].plot.line(label="panic sale",  linewidth=2, color=(182/255,12/255,75/255))
-df["buy-and-hold"].plot.line(label="buy and hold", linewidth=2, color=(24/255,93/255,169/255))
+df["panic-sale"].plot.line(label="fairr portfolio",  linewidth=2, color=(182/255,12/255,75/255))
+
 
 ax.set_xlabel('Date')
 ax.set_ylabel('Total Return (12th March 2020 = 100)')
@@ -106,12 +128,4 @@ fig.tight_layout()
 plt.legend(loc="upper right", title="Strategy", frameon=True)
 plt.show()
 fig.savefig("C:\\Users\\janni\\Dropbox\\university\\13 Semester bis zum Lebensende\\2021_02 buy-and-hold\\codes\\docs\\buy_and_hold.png")
-
-
-
-
-
-
-
-
 
