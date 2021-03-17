@@ -135,7 +135,7 @@ plt.legend(loc="upper right", title="Strategy", frameon=True)
 plt.suptitle("Fairr riester portfolio: Buy-and-hold vs panic-sale ", fontsize=16)
 ax.set_title('The fairr Riester portfolio consisted of eight ETFs (light blue lines). On March 12th, fair and Sutor bank'
              '\nsold the entire portfolio. The dark blue line represents the weighted returns of the fairr portfolio ETFS'
-             '\nfor a buy-and-hold strategy. The dark red line visualize the returns for the actual panic-sale return', fontsize = 8)
+             '\nfor a buy-and-hold strategy. The dark red line visualize the returns for the actual panic-sale return.', fontsize = 8)
 
 
 plt.show()

@@ -1,6 +1,5 @@
 # buy-and-hold
-This repository contains the code to reproduce the results from the note. Add content.
-
+This repository contains the code to reproduce the plot below. Input data is stored on AWS S3.
 
 
 ![](https://github.com/JannicCutura/buy-and-hold/blob/main/docs/buy_and_hold.png) 
